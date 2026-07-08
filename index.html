@@ -1954,7 +1954,14 @@ async function renderAdmin(){
   if(adminTab==='new'){renderNewPane();return;}
   const c=document.getElementById('admin-content');
   c.innerHTML='<div style="text-align:center;padding:30px"><div class="spinner"></div></div>';
-  try{await fetchData(true);}catch(e){c.innerHTML='<div style="text-align:center;padding:30px;color:var(--rd-d)">Lỗi. <span style="color:var(--pu-b);cursor:pointer;font-weight:700" onclick="renderAdmin()">Thử lại</span></div>';return;}
+  try{await fetchData(true);}catch(e){
+    c.innerHTML=`<div style="text-align:center;padding:20px">
+      <div style="color:var(--rd-d);font-weight:700;margin-bottom:10px">❌ Lỗi tải dữ liệu</div>
+      <div style="background:#f5f5f5;border-radius:10px;padding:12px;font-size:11px;text-align:left;word-break:break-all;margin-bottom:10px;color:#333">${e.message||e.toString()}</div>
+      <span style="color:var(--pu-b);cursor:pointer;font-weight:700" onclick="renderAdmin()">↻ Thử lại</span>
+    </div>`;
+    return;
+  }
   renderAdminContent();
 }
 async function renderAdminContent(){
